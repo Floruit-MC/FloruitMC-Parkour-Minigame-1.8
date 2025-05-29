@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id("com.gradleup.shadow") version "9.0.0-beta10"
+}
+
+group = 'com.hanielfialho'
+version = '1.0-SNAPSHOT'
+tasks.build.dependsOn 'shadowJar'
+
+// Versões como variáveis para fácil manutenção
+ext {
+    lombokVersion = '1.18.36'
+    caffeineVersion = '3.2.0'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.imanity.dev/imanity-libraries/' }
+    maven { url 'https://repo.aikar.co/content/groups/aikar/' }
+}
+
+dependencies {
+    compileOnly 'org.imanity.paperspigot:paper1.8.8:1.8.8'
+
+    implementation "com.github.ben-manes.caffeine:caffeine:${caffeineVersion}"
+    implementation 'co.aikar:acf-paper:0.5.1-SNAPSHOT'
+    implementation 'com.zaxxer:HikariCP:3.4.5'
+    implementation 'fr.mrmicky:fastboard:2.1.4'
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+
+shadowJar {
+    relocate 'co.aikar.commands', 'com.hanielcota.floruitparkour.acf'
+    relocate 'co.aikar.locales', 'com.hanielcota.floruitparkour.locales'
+
+    relocate 'fr.mrmicky.fastboard', 'com.hanielcota.floruitparkour.fastboard'
+}
+
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 11
+}
+
+tasks.withType(ProcessResources).configureEach {
+    filteringCharset = 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand(version: project.version)
+    }
+}

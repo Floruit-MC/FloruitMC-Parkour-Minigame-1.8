@@ -1,0 +1,58 @@
+database:
+  host: 51.222.8.157
+  port: 3306
+  name: s37_parkour
+  user: u37_1i4XiJCT6R
+  password: BP31M@o15kL@izlkjc2Mx90+
+
+messages:
+  start: "&a&lPARKOUR INICIADO!"
+  checkpoint: "&e&lFLORUIT MC &f➤ &e✔ CHECKPOINT ALCANÇADO!"
+  finish: "&a&lFLORUIT MC &f➤ &a✔ Você concluiu em &f{time}s!"
+  dbError: "&c&lFLORUIT MC &f➤ &c✘ Erro ao salvar no banco de dados."
+
+  not-in-parkour: "&c&lFLORUIT MC &f➤ &c✘ Você não está em um parkour."
+  left-parkour: "&e&lFLORUIT MC &f➤ &e✔ Você saiu do parkour. Redirecionando..."
+  no-checkpoint: "&e&lFLORUIT MC &f➤ &e✘ Nenhum checkpoint alcançado."
+  checkpoint-teleport: "&a&lFLORUIT MC &f➤ &a✔ Teleportado para o último checkpoint."
+  checkpoint-restart: "&a&lFLORUIT MC &f➤ &a✔ Você retornou ao último checkpoint."
+  status: "&e&lFLORUIT MC &f➤ &eTempo atual: &f{time}s"
+
+scoreboard:
+  enabled: true
+  title: "&6&lPARKOUR"
+  lines:
+    - ""
+    - "&eTempo: &f{time}"
+    - "&eCheckpoint: &f{checkpoint}"
+    - ""
+    - "&eOnline: &f{online}"
+    - ""
+    - "&eloja.floruitmc.com.br"
+
+leave-server: parkour
+
+start-sound:
+  enabled: true
+  type: NOTE_PLING
+  volume: 1.0
+  pitch: 1.0
+
+items:
+  give-on-start:
+    "4":
+      material: SLIME_BALL
+      amount: 1
+      name: "&aVoltar ao Último checkpoint"
+      command: "/parkour checkpoint"
+
+    "8":
+      material: BED
+      amount: 1
+      name: "&cSair do Parkour"
+      command: "/parkour leave"
+
+actionbar:
+  enabled: true
+  message: "&eTempo: &f{time}s"
+  interval: 20 # 20 ticks = 1 segundo
